@@ -2,13 +2,24 @@
 
 class PHPChart_Graph_Line {
 	
-	private $color = '#000000';
+	private $color = null;
 	private $width = 2;
 	private $data;
 	private $name;
+	private $xmax = -9999;
+	private $xmin = 9999;
+	private $ymax = -9999;
+	private $ymin = 9999;
+	
+	private $graph;
 	
 	function __construct($name) {
 		$this->name = $name;
+	}
+	
+	function setGraph($graph) {
+		$this->graph = $graph;
+		if(!$this->color) $this->color = $this->graph->getNextColor();
 	}
 	
 	function getName() {
@@ -16,7 +27,17 @@ class PHPChart_Graph_Line {
 	}
 	
 	function appendData(array $set) {
+		foreach ($set as $x => $y) {
+			if ($this->xmax < $x) $this->xmax = $x;
+			if ($this->xmin > $x) $this->xmin = $x;
+			if ($this->ymax < $y) $this->ymax = $y;
+			if ($this->ymin > $y) $this->ymin = $y; 
+		}
 		$this->data[] = $set;
+	}
+	
+	function getBoundaries() {
+		return array($this->xmax, $this->xmin, $this->ymax, $this->ymin);
 	}
 	
 	function setColor($color) {
