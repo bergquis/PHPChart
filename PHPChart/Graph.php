@@ -19,6 +19,7 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 		foreach($this->lines as $line) {
 			$labels[$line->getName()] = $line->getColor(); 
 		}
+		return $labels;
 	}
 	
 	
@@ -78,8 +79,20 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 		
 	}
 	
+	function adjustDimensions() {
+		
+		//adjust for axis space and such
+		$this->xleft += 30;
+		$this->ytop += 5;
+		$this->ybottom -= 20;
+		$this->xright -= 10;
+	}
+	
 	function render() {
 		$this->calculateDimensions();
+		$this->drawBackground();
+		$this->adjustDimensions();
+		
 		$this->createAxis();
 		foreach($this->lines as $line) {	
 			$this->drawLine($line);	

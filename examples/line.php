@@ -8,12 +8,17 @@ include "../PHPChart/Graph.php";
 include "../PHPChart/Graph/Line.php";
 include "../PHPChart/Driver.php";
 include "../PHPChart/Driver/ImageMagick.php";
+include "../PHPChart/Legend.php";
 
 
 $chart = new PHPChart();
 $chart->setDriver(new PHPChart_Driver_ImageMagick);
-$lineChart = new PHPChart_Graph; 
+$lineChart = new PHPChart_Graph;
+$legend = new PHPChart_Legend($lineChart);
+ 
+
 $chart->setChart($lineChart);
+$chart->setLegend($legend);
 //$chart->setLegend(new PHPChart_Legend);
 
 $data = array(

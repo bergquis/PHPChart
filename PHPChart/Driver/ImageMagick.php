@@ -110,6 +110,17 @@ class PHPChart_Driver_ImageMagick extends PHPChart_Driver {
 		$this->id->polygon($points);
 	}
 	
+	function drawRectangle($x1, $y1, $x2, $y2) {
+		$this->id->rectangle($x1, $y1, $x2, $y2);
+	}
+	
+	function getTextDimension($text) {
+		$bla = $this->im->queryFontMetrics($this->id, $text);
+		//var_dump($bla);
+		return array($bla['textWidth'], $bla['boundingBox']['x2']);
+		 
+	}
+	
 	function getImage() {
 		$this->im->drawImage($this->id);
 		return $this->im;

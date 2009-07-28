@@ -8,9 +8,10 @@ class PHPChart {
 	
 	private $margin = array(0, 0, 0, 0);	
 	
-	private $backgroundcolor = '#f5f5f5';
+	private $backgroundcolor = 'none';
 	private $lines = array();
 	private $chart = null;
+	private $legend = null;
 	private $components = array();
 	private $driver;
 	private $format;
@@ -36,6 +37,8 @@ class PHPChart {
 		return $this->driver;
 	}
 	
+	
+	
 	function getSpace() {
 		return array($this->x1space, $this->y1space, $this->x2space, $this->y2space);
 	}
@@ -54,7 +57,11 @@ class PHPChart {
 		$this->y1space = 0;
 		$this->y2space = $this->height;
 		
+		
+		
+		$this->legend->render();
 		$this->chart->render();
+		
 		
 		header("Content-type: image/png");
 		
