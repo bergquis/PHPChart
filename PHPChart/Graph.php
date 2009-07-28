@@ -24,25 +24,12 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 	
 	
 	
-	function drawLine(PHPChart_Graph_Line $line) {
-				
-		
+	function drawLineFill(PHPChart_Graph_Line $line){
+		//Draw the polygons
 		foreach($line->getdata() as $data) {
 			$this->chart->getDriver()->setStrokeColor( new ImagickPixel( $line->getColor() ) );
 			$this->chart->getDriver()->setStrokeWidth($line->getWidth());
 			
-			$oldval = false;
-			foreach ($data as $key => $val) {
-				$thisval = array($key => $val);
-				if ($oldval) {
-					list($rx1, $ry1) = each($this->calculateCoordinate($oldval));
-					list($rx2, $ry2) = each($this->calculateCoordinate($thisval));
-					//var_dump($rx1, $ry1, $rx2, $ry2, $this->dx, $this->dy);
-					$this->chart->getDriver()->drawline($rx1, $ry1, $rx2, $ry2);
-					//$this->id->circle($rx1, $ry1, $rx1+1, $ry1+1);
-				}
-				$oldval = $thisval;		
-			}
 			//draw polygon
 			
 			list($x, $y) = each($data);
@@ -65,6 +52,35 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 			
 			
 		}
+	}
+	
+	
+	function drawLine(PHPChart_Graph_Line $line) {
+				
+		
+		
+		//Draw the line
+		foreach($line->getdata() as $data) {
+			$this->chart->getDriver()->setStrokeColor( new ImagickPixel( $line->getColor()) );
+			$this->chart->getDriver()->setStrokeWidth($line->getWidth());
+			$oldval = false;
+			foreach ($data as $key => $val) {
+				$thisval = array($key => $val);
+				if ($oldval) {
+					list($rx1, $ry1) = each($this->calculateCoordinate($oldval));
+					list($rx2, $ry2) = each($this->calculateCoordinate($thisval));
+					//var_dump($rx1, $ry1, $rx2, $ry2, $this->dx, $this->dy);
+					$this->chart->getDriver()->drawline($rx1, $ry1, $rx2, $ry2);
+					//$this->id->circle($rx1, $ry1, $rx1+1, $ry1+1);
+				}
+				$oldval = $thisval;		
+			}
+			
+			
+					
+			
+		}
+		
 	
 	}
 	
@@ -94,9 +110,15 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 		$this->adjustDimensions();
 		
 		$this->createAxis();
-		foreach($this->lines as $line) {	
+		
+		foreach($this->lines as $line) {		
+			$this->drawLineFill($line);	
+		}
+		foreach($this->lines as $line) {
+				
 			$this->drawLine($line);	
 		}
+		
 	}
 	
 	
