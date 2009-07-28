@@ -8,7 +8,7 @@ class PHPChart {
 	
 	private $margin = array(0, 0, 0, 0);	
 	
-	private $backgroundcolor = 'none';
+	private $backgroundcolor = '#ffffff';
 	private $lines = array();
 	private $chart = null;
 	private $legend = null;
