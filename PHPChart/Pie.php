@@ -6,7 +6,7 @@ class PHPChart_Pie extends PHPChart_AbstractChart {
 	
 	private $xrad;
 	private $yrad;
-	private $x, $y, $thickness;
+	private $x, $y, $thickness = 40;
 	
 	function __construct() {
 		
@@ -16,11 +16,19 @@ class PHPChart_Pie extends PHPChart_AbstractChart {
 	
 	
 	function setData(array $data) {
-		$this->data= $data;
+		foreach($data as $label) {
+			$label['color'] = isset($label['color']) ? $label['color'] : $this->getNextColor();
+			$this->data[]= $label ;
+		}
 	}
 	
 	function getLabels() {
-		return array_keys($this->data);
+		$labels = array();
+		foreach($this->data as $label) {
+			$labels[$label['label'] . ": " . $label['value']] = $label['color'];
+		} 
+		return $labels;
+		 
 	}
 	
 	function getSegments() {
@@ -41,8 +49,9 @@ class PHPChart_Pie extends PHPChart_AbstractChart {
 	
 	function render() {
 		$this->calculateDimensions();
+		$this->drawBackground();
 		$this->xrad = ($this->xright - $this->xleft) / 2;
-		$this->yrad = ($this->ybottom - $this->ytop) / 2;
+		$this->yrad = ($this->ybottom - $this->ytop - $this->thickness) / 2;
 		$this->x = $this->xrad + $this->xleft;
 		$this->y = $this->yrad + $this->ytop;
 		$this->thickness = 40;

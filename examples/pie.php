@@ -16,6 +16,12 @@ $chart->setDriver(new PHPChart_Driver_ImageMagick);
 
 $pie = new PHPChart_Pie();
 
+$legend = new PHPChart_Legend($pie);
+ 
+
+$chart->setChart($pie);
+$chart->setLegend($legend);
+
 $sets = array(
 			array('label' => 'A', 'value' => 23, 'color' =>  '#ff0000'),
 			array('label' => 'B', 'value' => 62, 'color' =>  '#0ff000'),

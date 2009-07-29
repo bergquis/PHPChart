@@ -6,7 +6,7 @@ class PHPChart_Palette_Basic extends PHPChart_Palette {
 	private $palette = array(
 		'#ff0000',
 		'#0ff000',
-		'#ffff00',
+		'#00ffff',
 		'#000ff0',
 		'#fffff0',
 		'#ffffff',
