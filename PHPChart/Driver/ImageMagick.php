@@ -58,8 +58,8 @@ class PHPChart_Driver_ImageMagick extends PHPChart_Driver {
 					$cy2 = $y + $yrad * sin(deg2rad(180));
 					$this->id->pathStart();
 					$this->id->pathMoveToAbsolute($cx, $cy);
-					$this->id->pathLineToAbsolute($cx, $cy + 40);
-					$this->id->PathEllipticArcAbsolute($xrad, $yrad, 0, 0, true, $cx2, $cy2 + 40);
+					$this->id->pathLineToAbsolute($cx, $cy + $pie->getThickness());
+					$this->id->PathEllipticArcAbsolute($xrad, $yrad, 0, 0, true, $cx2, $cy2 + $pie->getThickness());
 					$this->id->pathLineToAbsolute($cx2,$cy2);
 					$this->id->PathEllipticArcAbsolute($xrad, $yrad, 0, 0, false, $cx, $cy);
 					$this->id->pathFinish();
@@ -78,8 +78,8 @@ class PHPChart_Driver_ImageMagick extends PHPChart_Driver {
 				}
 				$this->id->pathStart();
 				$this->id->pathMoveToAbsolute($cx, $cy);
-				$this->id->pathLineToAbsolute($cx, $cy + 40);
-				$this->id->PathEllipticArcAbsolute($xrad, $yrad, 0, 0, true, $cx2, $cy2 + 40);
+				$this->id->pathLineToAbsolute($cx, $cy + $pie->getThickness());
+				$this->id->PathEllipticArcAbsolute($xrad, $yrad, 0, 0, true, $cx2, $cy2 + $pie->getThickness());
 				$this->id->pathLineToAbsolute($cx2,$cy2);
 				$this->id->PathEllipticArcAbsolute($xrad, $yrad, 0, 0, false, $cx, $cy);
 				$this->id->pathFinish();
@@ -114,10 +114,10 @@ class PHPChart_Driver_ImageMagick extends PHPChart_Driver {
 		$this->id->rectangle($x1, $y1, $x2, $y2);
 	}
 	
-	function getTextDimension($text) {
+	function getTextDimensions($text) {
 		$bla = $this->im->queryFontMetrics($this->id, $text);
 		//var_dump($bla);
-		return array($bla['textWidth'], $bla['boundingBox']['x2']);
+		return array($bla['textWidth'], $bla['boundingBox']['x2'], $bla['characterWidth'] );
 		 
 	}
 	
@@ -126,4 +126,7 @@ class PHPChart_Driver_ImageMagick extends PHPChart_Driver {
 		return $this->im;
 	}
 	
+	function setFontSize($size) {
+		$this->id->setFontSize($size);
+	}
 }

@@ -55,6 +55,20 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 	}
 	
 	
+		
+	function calculateProperties() {
+		//make sure steps are sensible
+		$this->ytop = $ytop = $this->margin[0];
+		$this->ybottom = $ybottom = $this->height - $this->margin[2];
+		$this->xleft = $xleft = $this->margin[3];
+		$this->xright = $xright = $this->width - $this->margin[1];
+		
+		$this->dx = $pstep = ($xright-$xleft) / $this->xstep ;
+		$this->dy = $pstep = ($ybottom-$ytop) / $this->ystep ;
+		
+	}
+	
+	
 	function drawLine(PHPChart_Graph_Line $line) {
 				
 		

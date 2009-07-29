@@ -6,13 +6,15 @@ class PHPChart_Pie extends PHPChart_AbstractChart {
 	
 	private $xrad;
 	private $yrad;
-	private $x, $y, $thickness = 40;
+	private $x, $y, $thickness = 4;
 	
 	function __construct() {
 		
 	}
 	
-	
+	function getThickness() {
+		return $this->thickness;
+	}
 	
 	
 	function setData(array $data) {
@@ -48,13 +50,17 @@ class PHPChart_Pie extends PHPChart_AbstractChart {
 	}
 	
 	function render() {
+		
 		$this->calculateDimensions();
+		$this->thickness = $this->height / 10;
 		$this->drawBackground();
 		$this->xrad = ($this->xright - $this->xleft) / 2;
 		$this->yrad = ($this->ybottom - $this->ytop - $this->thickness) / 2;
 		$this->x = $this->xrad + $this->xleft;
 		$this->y = $this->yrad + $this->ytop;
-		$this->thickness = 40;
+		
+		//var_dump($this->height, $this->thickness, $this->xrad, $this->yrad);
+		
 		
 		//$this->id->pathStart();
 		//Draw a segment

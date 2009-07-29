@@ -3,8 +3,15 @@
 
 class PHPChart {
 	
-	private $height = 400;
-	private $width = 600;
+	const LEFT = 1;
+	const RIGHT = 2;
+	const TOP = 4;
+	const BOTTOM = 8; 
+	const CENTER = 16;
+	
+	
+	private $height = 66;
+	private $width = 100;
 	
 	private $margin = array(0, 0, 0, 0);	
 	
@@ -20,8 +27,11 @@ class PHPChart {
 	private $x2space;
 	private $y2space;
 	
-	function __construct() {
-		
+	
+	
+	function __construct($width, $height) {
+		$this->height = $height;
+		$this->width = $width;
 	}
 	
 	function setBackgroundColor($color) {
@@ -51,6 +61,7 @@ class PHPChart {
 	
 	
 	function render() {
+		
 		//Set up some params
 		$this->x1space = 0;
 		$this->x2space = $this->width;
