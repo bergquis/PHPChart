@@ -27,7 +27,7 @@ class PHPChart_Pie extends PHPChart_AbstractChart {
 	function getLabels() {
 		$labels = array();
 		foreach($this->data as $label) {
-			$labels[$label['label'] . ": " . $label['value']] = $label['color'];
+			$labels[$label['label']] = $label['color'];
 		} 
 		return $labels;
 		 
