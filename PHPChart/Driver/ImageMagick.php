@@ -118,7 +118,6 @@ class PHPChart_Driver_ImageMagick extends PHPChart_Driver {
 		$bla = $this->im->queryFontMetrics($this->id, $text);
 		#var_dump($bla);
 		return array($bla['textWidth'], $bla['characterHeight'], $bla['characterWidth'] );
-		 
 	}
 	
 	function getImage() {

@@ -3,12 +3,12 @@
 
 class PHPChart_Graph extends PHPChart_AbstractChart {
 	
-	private $xstep = 1;
+	private $xstep = 5;
 	private $ystep = 1;
-	private $xmin = 9999;
-	private $xmax = -9999;
-	private $ymin = 9999;
-	private $ymax = -9999;
+	private $xmin = null;
+	private $xmax = null;
+	private $ymin = null;
+	private $ymax = null;
 	private $dx = 0;
 	private $dy = 0;
 	
@@ -101,7 +101,7 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 	function calculateCoordinate(array $point) {
 		list($x, $y) = each($point);
 		
-		$rx = $this->xleft + $x * $this->dx;
+		$rx = $this->xleft + ($x-1) * $this->dx;
 		
 		
 		$ry = $this->ytop + ($y-1) * $this->dy;
@@ -143,18 +143,39 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 		$this->lines[] = $line;
 	}
 	
+	function setYMax($v)  {
+		$this->ymax= $v;
+	}
+	
+	function setYMin($v)  {
+		$this->ymin= $v;
+	}
+	
 	function calculateAxisSteps() {
+		
+		
+		
+		$adjustxmax = $this->xmax === null;
+		$adjustymax = $this->ymax === null;
+		$adjustxmin = $this->xmin === null;
+		$adjustymin = $this->ymin === null;
+		
+		if ($this->xmax === null) $this->xmax = -9999;
+		if ($this->ymax === null) $this->ymax = -9999;
+		if ($this->xmin === null) $this->xmin = 9999;
+		if ($this->ymin === null) $this->ymin = 9999;
 		
 		foreach ($this->lines as $line) {
 			list($xmax, $xmin, $ymax, $ymin) = $line->getBoundaries();
-			if ($this->xmax < $xmax) $this->xmax = $xmax;
-			if ($this->xmin > $xmin) $this->xmin = $xmin;
-			if ($this->ymax < $ymax) $this->ymax = $ymax;
-			if ($this->ymin > $ymin) $this->ymin = $ymin; 
+			if ($adjustxmax && $this->xmax < $xmax) $this->xmax = $xmax;
+			if ($adjustxmin && $this->xmin > $xmin) $this->xmin = $xmin;
+			if ($adjustymax && $this->ymax < $ymax) $this->ymax = $ymax;
+			if ($adjustymin && $this->ymin > $ymin) $this->ymin = $ymin; 
 		}
 		
-		$this->dy = ($this->ybottom-$this->ytop) / ($this->ymax - $this->ymin + 1) ;
-		$this->dx =  ($this->xright-$this->xleft) / ($this->xmax - $this->ymin + 1) ;
+
+		$this->dy = ($this->ybottom-$this->ytop) / ($this->ymax - $this->ymin) ;
+		$this->dx =  ($this->xright-$this->xleft) / ($this->xmax - $this->ymin) ;
 	}
 	
 	
@@ -165,9 +186,10 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 		
 		//draw some lines;
 		$pstep = $this->dy;
-		for ($i = 0; $this->ytop + ($i + 1) * $pstep <= $this->ybottom; $i+=1) {
-			$this->chart->getdriver()->drawline($this->xleft-5, $this->ytop + $i * $pstep, $this->xleft+5, $this->ytop + $i * $pstep);
-			$this->chart->getdriver()->text($this->xleft-30, $this->ytop + $i * $pstep + 4, $i + 1);
+		for ($i = $this->ymin; $i <= $this->ymax; $i+=$this->ystep) {
+			$ci =  $i - $this->ymin ;
+			$this->chart->getdriver()->drawline($this->xleft-5, $this->ytop + $ci * $pstep, $this->xleft+5, $this->ytop + $ci * $pstep);
+			$this->chart->getdriver()->text($this->xleft-30, $this->ytop + $ci * $pstep + 4, $ci + 1);
 		}
 		
 				
@@ -176,10 +198,11 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 		
 		//draw some lines;
 		$pstep = $this->dx;
-		for ($i = 1; $this->xleft + $i * $pstep <= $this->xright; $i+=1) {
+		for ($i = $this->xmin; $i <= $this->xmax; $i+=$this->xstep) {
+			$ci =  $i - $this->xmin ;
 			//var_dump($this->xright);die;
-			$this->chart->getdriver()->drawline($this->xleft + $i * $pstep, $this->ybottom-5, $this->xleft + $i * $pstep, $this->ybottom+5 );
-			$this->chart->getdriver()->text($this->xleft + $i * $pstep - 4, $this->ybottom + 16, $i);
+			$this->chart->getdriver()->drawline($this->xleft + $ci * $pstep, $this->ybottom-5, $this->xleft + $ci * $pstep, $this->ybottom+5 );
+			$this->chart->getdriver()->text($this->xleft + $ci * $pstep - 4, $this->ybottom + 16, $ci + 1);
 			
 		}
 		
