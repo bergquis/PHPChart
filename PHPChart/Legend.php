@@ -47,10 +47,10 @@ class PHPChart_Legend extends PHPChart_Component {
 			}
 			if ($this->position & PHPChart::RIGHT) {
 				
-				$this->chart->getDriver()->drawRectangle($bx, $by,  $bx + $dimensions[1], $by + $dimensions[1]);
+				$this->chart->getDriver()->drawRectangle($bx, $by,  $bx + $dimensions[1], $by + $dimensions[1]-2);
 				$this->chart->getDriver()->setStrokeColor('transparent');
 				$this->chart->getDriver()->setFillColor($this->strokeColor);
-				$this->chart->getDriver()->text($bx + $dimensions[2], $by + $dimensions[1], $label);
+				$this->chart->getDriver()->text($bx + $dimensions[1] + $dimensions[2], $by + $dimensions[1]-2, $label);
 				$by += $dimensions[1] + $dimensions[1];
 			}  
 		}
