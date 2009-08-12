@@ -7,9 +7,11 @@ include "../PHPChart/Driver.php";
 include "../PHPChart/Driver/ImageMagick.php";
 include "../PHPChart/AbstractChart.php";
 include "../PHPChart/Pie.php";
+include "../PHPChart/Legend.php";
+include "../PHPChart/Palette.php";
+include "../PHPChart/Palette/Basic.php";
 
-
-$chart = new PHPChart();
+$chart = new PHPChart(400, 200);
 $chart->setDriver(new PHPChart_Driver_ImageMagick);
 
 
@@ -18,6 +20,7 @@ $pie = new PHPChart_Pie();
 
 $legend = new PHPChart_Legend($pie);
  
+$legend->setFontSize(12);
 
 $chart->setChart($pie);
 $chart->setLegend($legend);

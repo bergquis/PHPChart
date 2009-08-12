@@ -9,13 +9,15 @@ include "../PHPChart/Graph/Line.php";
 include "../PHPChart/Driver.php";
 include "../PHPChart/Driver/ImageMagick.php";
 include "../PHPChart/Legend.php";
+include "../PHPChart/Palette.php";
+include "../PHPChart/Palette/Basic.php";
 
-
-$chart = new PHPChart();
-$chart->setDriver(new PHPChart_Driver_ImageMagick);
+$chart = new PHPChart(600,400);
+$chart->setDriver($d = new PHPChart_Driver_ImageMagick);
 $lineChart = new PHPChart_Graph;
 $legend = new PHPChart_Legend($lineChart);
- 
+$legend->setFontSize(12);
+
 
 $chart->setChart($lineChart);
 $chart->setLegend($legend);
