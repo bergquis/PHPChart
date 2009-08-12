@@ -11,10 +11,21 @@ class PHPChart_Graph_Line {
 	private $ymax = -9999;
 	private $ymin = 9999;
 	
+	private $alpha = null;
+	
 	private $graph;
 	
 	function __construct($name) {
 		$this->name = $name;
+	}
+	
+	function getLineFillAlpha() {
+		if ($this->alpha === null) $this->alpha = $this->graph->getLineFillAlpha();
+		return $this->alpha;
+	}
+	
+	function setLineFillAlpha($alpha) {
+		$this->alpha = $alpha;	
 	}
 	
 	function setGraph($graph) {

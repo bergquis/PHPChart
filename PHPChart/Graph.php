@@ -12,7 +12,18 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 	private $dx = 0;
 	private $dy = 0;
 	
+	private $linefillalpha = 0;
+	
 	private $lines = array();
+	
+	
+	function setLineFillAlpha($alpha) {
+		$this->linefillalpha = $alpha;
+	}
+	
+	function getLineFillAlpha() {
+		return $this->linefillalpha;
+	}
 	
 	function getLabels() {
 		$labels = array();
@@ -47,7 +58,7 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 			$color = $line->getColor(); 
 			
 			$this->chart->getDriver()->setStrokeColor( new ImagickPixel( $color . '00') );
-			$this->chart->getDriver()->setFillColor( new ImagickPixel( $color . '44') );
+			$this->chart->getDriver()->setFillColor( new ImagickPixel( $color . sprintf("%02x", $line->getLineFillAlpha())) );
 			$this->chart->getDriver()->drawPolygon($points);
 			
 			
