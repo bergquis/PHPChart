@@ -41,9 +41,10 @@ class PHPChart_Legend extends PHPChart_Component {
 			if ($this->position & PHPChart::BOTTOM) {
 				$by = $this->ybottom - ($this->height - $dimensions[1]) / 2;
 				$this->chart->getDriver()->drawRectangle($bx, $by,  $bx + $dimensions[1], $by - $dimensions[1]);
+				$this->chart->getDriver()->setStrokeColor('transparent');
 				$this->chart->getDriver()->setStrokeColor($this->strokeColor);
-				$this->chart->getDriver()->text($bx + $dimensions[2], $by, $label);
-				$bx += $dimensions[0] + $dimensions[1] + $dimensions[2];
+				$this->chart->getDriver()->text($bx + $dimensions[2] * 1.5, $by -1, $label);
+				$bx += $dimensions[0] + $dimensions[1] + $dimensions[2] * 2;
 			}
 			if ($this->position & PHPChart::RIGHT) {
 				
