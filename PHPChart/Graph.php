@@ -173,6 +173,8 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 			if ($adjustymin && $this->ymin > $ymin) $this->ymin = $ymin; 
 		}
 		
+		if ($this->ymax == $this->ymin ) throw new Exception("Graph values are illegal. Both the max and min value for the y-axis are " . $this->ymax);
+		if ($this->xmax == $this->xmin ) throw new Exception("Graph values are illegal. Both the max and min value for the x-axis are " . $this->xmin);
 
 		$this->dy = ($this->ybottom-$this->ytop) / ($this->ymax - $this->ymin) ;
 		$this->dx =  ($this->xright-$this->xleft) / ($this->xmax - $this->ymin) ;
