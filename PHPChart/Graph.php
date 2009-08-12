@@ -194,6 +194,7 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 	function createAxis() {
 		//y axis
 		$this->calculateAxisSteps();
+		$this->chart->getdriver()->setstrokecolor('black');
 		$this->chart->getdriver()->drawline($this->xleft, $this->ytop, $this->xleft, $this->ybottom);
 		
 		//draw some lines;

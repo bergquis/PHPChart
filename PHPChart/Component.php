@@ -4,7 +4,7 @@ abstract class PHPChart_Component {
 	
 	protected $strokeColor = "#000000";
 	
-	protected $backgroundColor = "#ffcc9933";
+	protected $backgroundColor = "#ffcc9900";
 	
 	
 	protected $ytop = null;
@@ -26,7 +26,7 @@ abstract class PHPChart_Component {
 	protected $margin = array('2', '2', '2', '2');
 	protected $padding = array('5', '5', '5', '5');
 	
-	protected $borderColor = array('black', 'black', 'black', 'black');
+	protected $borderColor = array('#00ff0000', 'black', 'black', 'black');
 	protected $borderWidth = array(1, 1, 1, 1);  
 	
 	protected $scalable = true;
@@ -41,7 +41,7 @@ abstract class PHPChart_Component {
 	
 	
 	function drawBackground() {
-		$this->getParentComponent()->getDriver()->setStrokeColor($this->strokeColor);
+		$this->getParentComponent()->getDriver()->setStrokeColor($this->borderColor[0]);
 		$this->getParentComponent()->getDriver()->setfillcolor($this->backgroundColor);
 		
 		$this->getParentComponent()->getDriver()->drawRectangle($this->xleft - $this->padding[3], $this->ytop - $this->padding[0],  $this->xright  + $this->padding[1], $this->ybottom + $this->padding[2]);
