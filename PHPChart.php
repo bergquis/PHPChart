@@ -3,7 +3,7 @@
 #noe
 
 
-class PHPChart {
+class PHPChart extends PHPChart_Component {
 	
 	const LEFT = 1;
 	const RIGHT = 2;
@@ -12,14 +12,13 @@ class PHPChart {
 	const CENTER = 16;
 	
 	
-	private $height = 66;
-	private $width = 100;
 	
-	private $margin = array(0, 0, 0, 0);	
+	
+		
 	
 	private $backgroundcolor = '#ffffff00';
 	private $lines = array();
-	private $chart = null;
+	private $mainchart = null;
 	private $legend = null;
 	private $components = array();
 	private $driver;
@@ -28,7 +27,7 @@ class PHPChart {
 	private $y1space;
 	private $x2space;
 	private $y2space;
-	
+	protected $margin = array(0,0,0,0); 
 	
 	
 	function __construct($width, $height) {
@@ -36,9 +35,7 @@ class PHPChart {
 		$this->width = $width;
 	}
 	
-	function setBackgroundColor($color) {
-		$this->backgroundcolor = $color;
-	}
+	
 	
 	function setDriver(PHPChart_Driver $driver) {
 		$this->driver = $driver;
@@ -49,7 +46,9 @@ class PHPChart {
 		return $this->driver;
 	}
 	
-	
+	function getParentComponent() {
+		return $this;
+	}
 	
 	function getSpace() {
 		return array($this->x1space, $this->y1space, $this->x2space, $this->y2space);
@@ -60,20 +59,28 @@ class PHPChart {
 		
 	}
 	
-	
+	function calculateDimensions() {
+		$this->ytop = $this->margin[0] + $this->padding[0];
+		$this->ybottom = $this->height - ($this->margin[0] + $this->padding[0] + $this->margin[2] + $this->padding[2]);
+		$this->xleft = $this->margin[3] + $this->padding[3];
+		$this->xright = $this->width - ($this->margin[3] + $this->padding[3] + $this->margin[1] + $this->padding[1]);
+		
+	}
 	
 	function render() {
 		
 		//Set up some params
-		$this->x1space = 0;
-		$this->x2space = $this->width;
-		$this->y1space = 0;
-		$this->y2space = $this->height;
+		$this->calculateDimensions();
+		
+		$this->x1space = $this->xleft;
+		$this->x2space = $this->xright;
+		$this->y1space = $this->ytop;
+		$this->y2space = $this->ybottom;
 		
 		
-		
+		$this->drawBackground();	
 		$this->legend->render();
-		$this->chart->render();
+		$this->mainchart->render();
 		
 		
 		header("Content-type: image/png");
@@ -82,7 +89,7 @@ class PHPChart {
 	}
 	
 	function setChart(PHPChart_AbstractChart $graph) {
-		$this->chart = $graph;
+		$this->mainchart = $graph;
 		$graph->setChart($this);
 	}
 	

@@ -3,7 +3,8 @@
 abstract class PHPChart_Component {
 	
 	protected $strokeColor = "#000000";
-	protected $fillColor = "#ffcc9933";
+	
+	protected $backgroundColor = "#ffcc9933";
 	
 	
 	protected $ytop = null;
@@ -12,7 +13,9 @@ abstract class PHPChart_Component {
 	protected $xright = null;
 	protected $height = null;
 	protected $width = null;
-	protected $chart;
+	
+	
+	
 	protected $xscale = true;
 	protected $yscale = true;
 	
@@ -22,6 +25,9 @@ abstract class PHPChart_Component {
 	
 	protected $margin = array('2', '2', '2', '2');
 	protected $padding = array('5', '5', '5', '5');
+	
+	protected $borderColor = array('black', 'black', 'black', 'black');
+	protected $borderWidth = array(1, 1, 1, 1);  
 	
 	protected $scalable = true;
 	
@@ -35,24 +41,24 @@ abstract class PHPChart_Component {
 	
 	
 	function drawBackground() {
-		$this->chart->getDriver()->setStrokeColor($this->strokeColor);
-		$this->chart->getDriver()->setFillColor($this->fillColor);
+		$this->getParentComponent()->getDriver()->setStrokeColor($this->strokeColor);
+		$this->getParentComponent()->getDriver()->setfillcolor($this->backgroundColor);
 		
-		$this->chart->getDriver()->drawRectangle($this->xleft - $this->padding[3], $this->ytop - $this->padding[0],  $this->xright  + $this->padding[1], $this->ybottom + $this->padding[2]);
+		$this->getParentComponent()->getDriver()->drawRectangle($this->xleft - $this->padding[3], $this->ytop - $this->padding[0],  $this->xright  + $this->padding[1], $this->ybottom + $this->padding[2]);
 	}
 	
 	function calculateDimensions() {
-		list($x1, $y1, $x2, $y2) = $this->chart->getSpace();
+		list($x1, $y1, $x2, $y2) = $this->getParentComponent()->getSpace();
 		$this->yscale = ($this->height == null);
 		$this->xscale = ($this->width == null);
 		//var_dump($this->xscale, $this->yscale);die;
 		if ($this->yscale) {
 			$this->ytop = $y1 + $this->margin[0] + $this->padding[0];
-			$this->ybottom = $y2 - $this->margin[2] - $this->padding[2];
+			$this->ybottom = $y2 - $this->margin[2] - $this->padding[2] - $this->margin[0] - $this->padding[0];
 		} else {
 			$this->ybottom = $y2 - $this->margin[2] - $this->padding[2];
-			$this->ytop = $this->ybottom - $this->height;
-			$y2 = $this->ytop;
+			$this->ytop = $this->ybottom - ($this->height);
+			$y2 = $this->ytop - $this->margin[0] -  $this->padding[0];
 			 
 		}
 		
@@ -73,7 +79,7 @@ abstract class PHPChart_Component {
 		$this->height = $this->ybottom - $this->ytop;
 		$this->width = $this->xright - $this->xleft;
 		
-		$this->chart->setSpace(array($x1, $y1, $x2, $y2));
+		$this->getParentComponent()->setSpace(array($x1, $y1, $x2, $y2));
 		 
 		
 	}
@@ -91,14 +97,14 @@ abstract class PHPChart_Component {
 		$this->$margin = $margin;
 	}
 	
-	function setChart(PHPChart $chart) {
-		$this->chart = $chart;	
-	}
 	
-	function getChart() {
-		return $this->chart;
+	
+	function setBackgroundColor($color) {
+		$this->backgroundcolor = $color;
 	}
 	
 	abstract function render();
 	
+	
+	abstract function getParentComponent();
 } 

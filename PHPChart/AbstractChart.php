@@ -5,6 +5,8 @@ abstract class PHPChart_AbstractChart extends PHPChart_Component{
 	
 	private $palette;
 	
+	protected $chart;
+	
 	abstract function getLabels();
 	
 	function setPalette(PHPChart_Palette $palette) {
@@ -16,4 +18,11 @@ abstract class PHPChart_AbstractChart extends PHPChart_Component{
 		return $this->palette->getNextColor();
 	}
 	
+	function getParentComponent() {
+		return $this->chart;
+	}
+	
+	function setChart(PHPChart $chart) {
+		$this->chart = $chart;	
+	}
 }

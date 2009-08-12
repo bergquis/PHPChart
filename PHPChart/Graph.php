@@ -16,7 +16,6 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 	
 	private $lines = array();
 	
-	
 	function setLineFillAlpha($alpha) {
 		$this->linefillalpha = $alpha;
 	}

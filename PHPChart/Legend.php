@@ -6,7 +6,7 @@ class PHPChart_Legend extends PHPChart_Component {
 	private $labels = array();
 	private $achart;
 	
-	
+	private $chart;
 	
 	
 	protected $width = 100 ;
@@ -23,7 +23,7 @@ class PHPChart_Legend extends PHPChart_Component {
 	}
 	
 	function render() {
-		$this->chart->getDriver()->setFillColor($this->fillColor);
+		
 		$this->calculateDimensions();
 		$this->labels = $this->achart->getLabels();
 		$this->drawBackground();
@@ -57,6 +57,14 @@ class PHPChart_Legend extends PHPChart_Component {
 		}
 		
 		
+	}
+	
+	function setChart(PHPChart $chart) {
+		$this->chart = $chart;	
+	}
+	
+	function getParentComponent() {
+		return $this->chart;
 	}
 	
 }
