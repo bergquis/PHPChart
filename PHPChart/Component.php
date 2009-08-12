@@ -54,7 +54,7 @@ abstract class PHPChart_Component {
 		//var_dump($this->xscale, $this->yscale);die;
 		if ($this->yscale) {
 			$this->ytop = $y1 + $this->margin[0] + $this->padding[0];
-			$this->ybottom = $y2 - $this->margin[2] - $this->padding[2] - $this->margin[0] - $this->padding[0];
+			$this->ybottom = $y2 - $this->margin[2] - $this->padding[2];
 		} else {
 			$this->ybottom = $y2 - $this->margin[2] - $this->padding[2];
 			$this->ytop = $this->ybottom - ($this->height);
@@ -71,8 +71,8 @@ abstract class PHPChart_Component {
 				$this->xright = $this->xleft + $this->width;
 			} else {
 				$this->xright = $x2 - $this->margin[1]  - $this->padding[1];
-				$this->xleft = $this->xright - $this->width;
-				$x2 = $this->xleft;
+				$this->xleft = $this->xright - $this->width + $this->margin[1]  + $this->padding[1];
+				$x2 = $this->xleft - $this->margin[3]  - $this->padding[3];
 			}
 		}
 		

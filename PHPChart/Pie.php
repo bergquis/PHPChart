@@ -67,11 +67,11 @@ class PHPChart_Pie extends PHPChart_AbstractChart {
 		$rot = 0;
 		
 		foreach ($this->getSegments() as $set) {
-			$this->getchart()->getdriver()->setFillColor($set['color']);
-			$this->getchart()->getdriver()->setStrokeColor($set['color']);
+			$this->getparentcomponent()->getdriver()->setFillColor($set['color']);
+			$this->getparentcomponent()->getdriver()->setStrokeColor($set['color']);
 			$angle = $set['angle'];
 			
-			$this->getchart()->getdriver()->drawPieSegment($this, $angle, $rot);
+			$this->getparentcomponent()->getdriver()->drawPieSegment($this, $angle, $rot);
 			
 			$rot += $set['angle'];
 			
