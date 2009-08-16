@@ -1,8 +1,8 @@
 <?php
 error_reporting(E_ALL);
+include "../PHPChart/Component.php";
 include "../PHPChart.php";
 
-include "../PHPChart/Component.php";
 include "../PHPChart/Driver.php";
 include "../PHPChart/Driver/ImageMagick.php";
 include "../PHPChart/AbstractChart.php";

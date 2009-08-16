@@ -1,8 +1,8 @@
 <?php
 error_reporting(E_ALL);
+include "../PHPChart/Component.php";
 include "../PHPChart.php";
 
-include "../PHPChart/Component.php";
 include "../PHPChart/AbstractChart.php";
 include "../PHPChart/Graph.php";
 include "../PHPChart/Graph/Line.php";
@@ -15,6 +15,7 @@ include "../PHPChart/Palette/Basic.php";
 $chart = new PHPChart(600,400);
 $chart->setDriver($d = new PHPChart_Driver_ImageMagick);
 $lineChart = new PHPChart_Graph;
+$lineChart->setLineFillAlpha(140);
 $legend = new PHPChart_Legend($lineChart);
 $legend->setFontSize(12);
 
