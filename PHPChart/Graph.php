@@ -188,7 +188,7 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 
 
 		$this->dy = ($this->ybottom-$this->ytop) / ($this->ymax - $this->ymin) ;
-		$this->dx =  ($this->xright-$this->xleft) / ($this->xmax - $this->ymin) ;
+		$this->dx =  ($this->xright-$this->xleft) / ($this->xmax - $this->xmin) ;
 	}
 	
 	
