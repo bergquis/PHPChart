@@ -20,6 +20,11 @@ class PHPChart_Driver_ImageMagick extends PHPChart_Driver {
 		
 	}
 	
+	function circle($x, $y, $rad) {
+		$this->id->circle($x, $y, $x, $y + $rad);
+	}
+
+
 	function drawPieSegment($pie, $angle, $rot) {
 			list($x, $y) = $pie->getCenter();
 			list($xrad, $yrad) = $pie->getRad();

@@ -10,7 +10,9 @@ class PHPChart_Graph_Line {
 	private $xmin = 9999;
 	private $ymax = -9999;
 	private $ymin = 9999;
-	
+
+	private $circle = 0;
+
 	private $alpha = null;
 	
 	private $graph;
@@ -18,7 +20,16 @@ class PHPChart_Graph_Line {
 	function __construct($name) {
 		$this->name = $name;
 	}
-	
+
+	function setCircle($c) {
+		$this->circle = $c;
+	}
+
+	function getCircle() {
+		return $this->circle;
+
+	}
+
 	function getLineFillAlpha() {
 		if ($this->alpha === null) $this->alpha = $this->graph->getLineFillAlpha();
 		return $this->alpha;
