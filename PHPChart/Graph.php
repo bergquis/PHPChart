@@ -111,10 +111,10 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 	function calculateCoordinate(array $point) {
 		list($x, $y) = each($point);
 		
-		$rx = $this->xleft + ($x-1) * $this->dx;
+		$rx = $this->xleft + ($x-$this->xmin) * $this->dx;
 		
 		
-		$ry = $this->ytop + ($y-1) * $this->dy;
+		$ry = $this->ytop + ($y-$this->ymin) * $this->dy;
 		return array($rx=> $ry);
 		
 	}
@@ -186,6 +186,7 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 		if ($this->ymax == $this->ymin ) throw new Exception("Graph values are illegal. Both the max and min value for the y-axis are " . $this->ymax);
 		if ($this->xmax == $this->xmin ) throw new Exception("Graph values are illegal. Both the max and min value for the x-axis are " . $this->xmin);
 
+
 		$this->dy = ($this->ybottom-$this->ytop) / ($this->ymax - $this->ymin) ;
 		$this->dx =  ($this->xright-$this->xleft) / ($this->xmax - $this->ymin) ;
 	}
@@ -202,7 +203,7 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 		for ($i = $this->ymin; $i <= $this->ymax; $i+=$this->ystep) {
 			$ci =  $i - $this->ymin ;
 			$this->chart->getdriver()->drawline($this->xleft-5, $this->ytop + $ci * $pstep, $this->xleft+5, $this->ytop + $ci * $pstep);
-			$this->chart->getdriver()->text($this->xleft-30, $this->ytop + $ci * $pstep + 4, $ci + 1);
+			$this->chart->getdriver()->text($this->xleft-30, $this->ytop + $ci * $pstep + 4, $i);
 		}
 		
 				
@@ -215,7 +216,7 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 			$ci =  $i - $this->xmin ;
 			//var_dump($this->xright);die;
 			$this->chart->getdriver()->drawline($this->xleft + $ci * $pstep, $this->ybottom-5, $this->xleft + $ci * $pstep, $this->ybottom+5 );
-			$this->chart->getdriver()->text($this->xleft + $ci * $pstep - 4, $this->ybottom + 16, $ci + 1);
+			$this->chart->getdriver()->text($this->xleft + $ci * $pstep - 4, $this->ybottom + 16, $i);
 			
 		}
 		
