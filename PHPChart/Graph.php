@@ -84,15 +84,25 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 		
 		
 		//Draw the line
+
+
 		foreach($line->getdata() as $data) {
 			$this->chart->getDriver()->setStrokeColor( new ImagickPixel( $line->getColor()) );
 			$this->chart->getDriver()->setStrokeWidth($line->getWidth());
-			$oldval = false;
+			list($key, $val) = each($data);
+		if (count($data) == 1) {
+			$line->setCircle($line->getWidth());
+		}
+			$oldval = array($key => $val);
 			foreach ($data as $key => $val) {
 				$thisval = array($key => $val);
 				if ($oldval) {
 					list($rx1, $ry1) = each($this->calculateCoordinate($oldval));
 					list($rx2, $ry2) = each($this->calculateCoordinate($thisval));
+					if ($c = $line->getCircle()) {
+						$this->chart->getDriver()->circle($rx1, $ry1, $c);
+						$this->chart->getDriver()->circle($rx2, $ry2, $c);
+					}
 					//var_dump($rx1, $ry1, $rx2, $ry2, $this->dx, $this->dy);
 					$this->chart->getDriver()->drawline($rx1, $ry1, $rx2, $ry2);
 					//$this->id->circle($rx1, $ry1, $rx1+1, $ry1+1);
@@ -157,10 +167,19 @@ class PHPChart_Graph extends PHPChart_AbstractChart {
 		$this->ymax= $v;
 	}
 	
+
 	function setYMin($v)  {
 		$this->ymin= $v;
 	}
 	
+	function setXMax($v)  {
+		$this->xmax= $v;
+	}
+
+	function setXMin($v)  {
+		$this->xmin= $v;
+	}
+
 	function calculateAxisSteps() {
 		
 		
